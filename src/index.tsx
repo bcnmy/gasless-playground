@@ -1,15 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+import '@rainbow-me/rainbowkit/styles.css';
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
+
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [
+    chain.kovan,
+    chain.goerli,
+    chain.polygonMumbai,
+    chain.arbitrumRinkeby,
+    chain.optimismKovan,
+  ],
+  [publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: "Gasless Playground",
+  chains,
+});
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+  webSocketProvider,
+});
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider chains={chains} coolMode>
+        <App />
+      </RainbowKitProvider>
+    </WagmiConfig>
   </React.StrictMode>
 );
 

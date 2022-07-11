@@ -1,26 +1,31 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "gasless-playground",
+  "version": "0.1.11",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@rainbow-me/rainbowkit": "^0.4.1",
+    "@types/node": "^17.0.35",
+    "@types/react": "^18.0.9",
+    "ethers": "^5.0.0",
+    "mexa-sdk-v2": "/Users/aman/Desktop/work/bico/mexa-sdk-v2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.7.2",
+    "util": "0.12.4",
+    "wagmi": "^0.5.3",
+    "web-vitals": "^2.1.4",
+    "web3": "^1.7.4",
+    "webpack": "^5.72.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "npm run start",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --transformIgnorePatterns \"node_modules/(?!@rainbow-me)/\"",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +44,24 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-dom": "^18.0.6",
+    "assert": "^2.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "env-cmd": "^10.1.0",
+    "fs": "^0.0.1-security",
+    "https-browserify": "^1.0.0",
+    "net": "^1.0.2",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "polyfill": "^0.1.0",
+    "react-app-rewired": "^2.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "tls": "^0.0.1",
+    "url": "^0.11.0"
   }
 }
