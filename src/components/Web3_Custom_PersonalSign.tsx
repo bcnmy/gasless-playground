@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-// import "../App.css";
 import Button from "@material-ui/core/Button";
-
-// import "react-notifications/lib/notifications.css";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-import Web3 from "web3";
-import { Biconomy } from "mexa-sdk-v2";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
+
+import Web3 from "web3";
+import { Biconomy } from "mexa-sdk-v2";
 import { toBuffer } from "ethereumjs-util";
-// import { config } from "../utils/contractDetails";
 import { AbiItem } from "web3-utils";
 
 import {
@@ -30,207 +26,207 @@ const config = {
     address: "0xd03be140122c873ec8a05fab002cdeca814f84df",
     abi: [
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "address",
-            "name": "userAddress",
-            "type": "address"
+            internalType: "address",
+            name: "userAddress",
+            type: "address",
           },
           {
-            "internalType": "bytes",
-            "name": "functionSignature",
-            "type": "bytes"
+            internalType: "bytes",
+            name: "functionSignature",
+            type: "bytes",
           },
           {
-            "internalType": "bytes32",
-            "name": "sigR",
-            "type": "bytes32"
+            internalType: "bytes32",
+            name: "sigR",
+            type: "bytes32",
           },
           {
-            "internalType": "bytes32",
-            "name": "sigS",
-            "type": "bytes32"
+            internalType: "bytes32",
+            name: "sigS",
+            type: "bytes32",
           },
           {
-            "internalType": "uint8",
-            "name": "sigV",
-            "type": "uint8"
-          }
+            internalType: "uint8",
+            name: "sigV",
+            type: "uint8",
+          },
         ],
-        "name": "executeMetaTransaction",
-        "outputs": [
+        name: "executeMetaTransaction",
+        outputs: [
           {
-            "internalType": "bytes",
-            "name": "",
-            "type": "bytes"
-          }
+            internalType: "bytes",
+            name: "",
+            type: "bytes",
+          },
         ],
-        "stateMutability": "payable",
-        "type": "function"
+        stateMutability: "payable",
+        type: "function",
       },
       {
-        "anonymous": false,
-        "inputs": [
+        anonymous: false,
+        inputs: [
           {
-            "indexed": false,
-            "internalType": "address",
-            "name": "userAddress",
-            "type": "address"
+            indexed: false,
+            internalType: "address",
+            name: "userAddress",
+            type: "address",
           },
           {
-            "indexed": false,
-            "internalType": "address payable",
-            "name": "relayerAddress",
-            "type": "address"
+            indexed: false,
+            internalType: "address payable",
+            name: "relayerAddress",
+            type: "address",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
-            "name": "functionSignature",
-            "type": "bytes"
-          }
+            indexed: false,
+            internalType: "bytes",
+            name: "functionSignature",
+            type: "bytes",
+          },
         ],
-        "name": "MetaTransactionExecuted",
-        "type": "event"
+        name: "MetaTransactionExecuted",
+        type: "event",
       },
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "string",
-            "name": "newQuote",
-            "type": "string"
-          }
+            internalType: "string",
+            name: "newQuote",
+            type: "string",
+          },
         ],
-        "name": "setQuote",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
+        name: "setQuote",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
       },
       {
-        "inputs": [],
-        "name": "getChainID",
-        "outputs": [
+        inputs: [],
+        name: "getChainID",
+        outputs: [
           {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
         ],
-        "stateMutability": "pure",
-        "type": "function"
+        stateMutability: "pure",
+        type: "function",
       },
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
         ],
-        "name": "getNonce",
-        "outputs": [
+        name: "getNonce",
+        outputs: [
           {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          }
+            internalType: "uint256",
+            name: "nonce",
+            type: "uint256",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
+        stateMutability: "view",
+        type: "function",
       },
       {
-        "inputs": [],
-        "name": "getQuote",
-        "outputs": [
+        inputs: [],
+        name: "getQuote",
+        outputs: [
           {
-            "internalType": "string",
-            "name": "currentQuote",
-            "type": "string"
+            internalType: "string",
+            name: "currentQuote",
+            type: "string",
           },
           {
-            "internalType": "address",
-            "name": "currentOwner",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "currentOwner",
+            type: "address",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
+        stateMutability: "view",
+        type: "function",
       },
       {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
+        inputs: [],
+        name: "owner",
+        outputs: [
           {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
+        stateMutability: "view",
+        type: "function",
       },
       {
-        "inputs": [],
-        "name": "quote",
-        "outputs": [
+        inputs: [],
+        name: "quote",
+        outputs: [
           {
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-          }
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
+        stateMutability: "view",
+        type: "function",
       },
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "address",
-            "name": "owner",
-            "type": "address"
+            internalType: "address",
+            name: "owner",
+            type: "address",
           },
           {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
+            internalType: "uint256",
+            name: "nonce",
+            type: "uint256",
           },
           {
-            "internalType": "uint256",
-            "name": "chainID",
-            "type": "uint256"
+            internalType: "uint256",
+            name: "chainID",
+            type: "uint256",
           },
           {
-            "internalType": "bytes",
-            "name": "functionSignature",
-            "type": "bytes"
+            internalType: "bytes",
+            name: "functionSignature",
+            type: "bytes",
           },
           {
-            "internalType": "bytes32",
-            "name": "sigR",
-            "type": "bytes32"
+            internalType: "bytes32",
+            name: "sigR",
+            type: "bytes32",
           },
           {
-            "internalType": "bytes32",
-            "name": "sigS",
-            "type": "bytes32"
+            internalType: "bytes32",
+            name: "sigS",
+            type: "bytes32",
           },
           {
-            "internalType": "uint8",
-            "name": "sigV",
-            "type": "uint8"
-          }
+            internalType: "uint8",
+            name: "sigV",
+            type: "uint8",
+          },
         ],
-        "name": "verify",
-        "outputs": [
+        name: "verify",
+        outputs: [
           {
-            "internalType": "bool",
-            "name": "",
-            "type": "bool"
-          }
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
-      }
+        stateMutability: "view",
+        type: "function",
+      },
     ],
   },
   apiKey: {
@@ -240,7 +236,8 @@ const config = {
 };
 
 let chainId = 42;
-let web3: any, walletWeb3: any;
+// let web3: any;
+let walletWeb3: any;
 let biconomy: any;
 
 const useStyles = makeStyles((theme) => ({
@@ -278,7 +275,7 @@ function App() {
   const [quote, setQuote] = useState("This is a default quote");
   const [owner, setOwner] = useState("Default Owner Address");
   const [newQuote, setNewQuote] = useState("");
-  const [metaTxEnabled, setMetaTxEnabled] = useState(true);
+  const [metaTxEnabled] = useState(true);
   const [transactionHash, setTransactionHash] = useState("");
   const contract = useContract({
     addressOrName: config.contract.address,
@@ -489,9 +486,7 @@ function App() {
     <div className="App">
       <section className="main">
         <div className="flex">
-          <p className="mb-author">
-            Quote: {quote}
-          </p>
+          <p className="mb-author">Quote: {quote}</p>
         </div>
 
         <div className="mb-attribution">

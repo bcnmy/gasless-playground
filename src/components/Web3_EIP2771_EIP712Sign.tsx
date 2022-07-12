@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-// import "../App.css";
 import Button from "@material-ui/core/Button";
-
-// import "react-notifications/lib/notifications.css";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-import Web3 from "web3";
-import { Biconomy } from "mexa-sdk-v2";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
-// import { toBuffer } from "ethereumjs-util";
-// import { config } from "../utils/contractDetails";
+
+import Web3 from "web3";
+import { Biconomy } from "mexa-sdk-v2";
 import { AbiItem } from "web3-utils";
 
 import {
@@ -23,7 +18,6 @@ import {
   useContract,
   useSigner,
 } from "wagmi";
-let abi = require("ethereumjs-abi");
 
 let config = {
   contract: {
@@ -112,8 +106,8 @@ let config = {
   },
 };
 
-let chainId = 42;
-let web3: any, walletWeb3: any;
+// let chainId = 42;
+// let web3: any, walletWeb3: any;
 let biconomy: any;
 
 const useStyles = makeStyles((theme) => ({
@@ -141,7 +135,7 @@ function App() {
   const { address } = useAccount();
   const { chain } = useNetwork();
   const provider = useProvider();
-  const { data: signer, isError, isLoading } = useSigner();
+  const { data: signer } = useSigner();
 
   const classes = useStyles();
   const [backdropOpen, setBackdropOpen] = React.useState(true);
@@ -151,7 +145,7 @@ function App() {
   const [quote, setQuote] = useState("This is a default quote");
   const [owner, setOwner] = useState("Default Owner Address");
   const [newQuote, setNewQuote] = useState("");
-  const [metaTxEnabled, setMetaTxEnabled] = useState(true);
+  const [metaTxEnabled] = useState(true);
   const [transactionHash, setTransactionHash] = useState("");
   const contract = useContract({
     addressOrName: config.contract.address,

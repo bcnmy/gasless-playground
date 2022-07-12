@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { ethers, ContractInterface } from "ethers";
+import { ethers } from "ethers";
 import { Biconomy } from "mexa-sdk-v2";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
@@ -20,80 +20,51 @@ import {
 
 let config = {
   contract: {
-    address: "0x8ae808442aefe3bc1f544811cb0f1dda05895742",
+    address: "0x8e67eb59cf715c435e2af33fa4ee33c1a6d7a8ae",
     abi: [
+      { inputs: [], stateMutability: "nonpayable", type: "constructor" },
       {
-        inputs: [
-          {
-            internalType: "address",
-            name: "userAddress",
-            type: "address",
-          },
-          {
-            internalType: "bytes",
-            name: "functionSignature",
-            type: "bytes",
-          },
-          {
-            internalType: "bytes32",
-            name: "sigR",
-            type: "bytes32",
-          },
-          {
-            internalType: "bytes32",
-            name: "sigS",
-            type: "bytes32",
-          },
-          {
-            internalType: "uint8",
-            name: "sigV",
-            type: "uint8",
-          },
-        ],
-        name: "executeMetaTransaction",
-        outputs: [
-          {
-            internalType: "bytes",
-            name: "",
-            type: "bytes",
-          },
-        ],
-        stateMutability: "payable",
+        inputs: [],
+        name: "admin",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
         type: "function",
       },
       {
-        anonymous: false,
-        inputs: [
-          {
-            indexed: false,
-            internalType: "address",
-            name: "userAddress",
-            type: "address",
-          },
-          {
-            indexed: false,
-            internalType: "address payable",
-            name: "relayerAddress",
-            type: "address",
-          },
-          {
-            indexed: false,
-            internalType: "bytes",
-            name: "functionSignature",
-            type: "bytes",
-          },
+        inputs: [],
+        name: "getQuote",
+        outputs: [
+          { internalType: "string", name: "currentQuote", type: "string" },
+          { internalType: "address", name: "currentOwner", type: "address" },
         ],
-        name: "MetaTransactionExecuted",
-        type: "event",
+        stateMutability: "view",
+        type: "function",
       },
       {
         inputs: [
-          {
-            internalType: "string",
-            name: "newQuote",
-            type: "string",
-          },
+          { internalType: "address", name: "forwarder", type: "address" },
         ],
+        name: "isTrustedForwarder",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "owner",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "quote",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "string", name: "newQuote", type: "string" }],
         name: "setQuote",
         outputs: [],
         stateMutability: "nonpayable",
@@ -103,62 +74,26 @@ let config = {
         inputs: [
           {
             internalType: "address",
-            name: "user",
+            name: "_trustedForwarder",
             type: "address",
           },
         ],
-        name: "getNonce",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
-          },
-        ],
+        name: "setTrustedForwarder",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "trustedForwarder",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
         stateMutability: "view",
         type: "function",
       },
       {
         inputs: [],
-        name: "getQuote",
-        outputs: [
-          {
-            internalType: "string",
-            name: "currentQuote",
-            type: "string",
-          },
-          {
-            internalType: "address",
-            name: "currentOwner",
-            type: "address",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "owner",
-        outputs: [
-          {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "quote",
-        outputs: [
-          {
-            internalType: "string",
-            name: "",
-            type: "string",
-          },
-        ],
+        name: "versionRecipient",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
         stateMutability: "view",
         type: "function",
       },
@@ -166,30 +101,11 @@ let config = {
   },
   apiKey: {
     test: "cNWqZcoBb.4e4c0990-26a8-4a45-b98e-08101f754119",
-    prod: "rTN0Kt1dE.39ac9ec7-2150-47fe-adac-752615904bd1",
+    prod: "tNyxHiNaP.056bd335-d91c-49ef-842d-d1dce4da854b",
   },
 };
 
-const domainType = [
-  { name: "name", type: "string" },
-  { name: "version", type: "string" },
-  { name: "verifyingContract", type: "address" },
-  { name: "salt", type: "bytes32" },
-];
-
-const metaTransactionType = [
-  { name: "nonce", type: "uint256" },
-  { name: "from", type: "address" },
-  { name: "functionSignature", type: "bytes" },
-];
-
-let domainData = {
-  name: "TestContract",
-  version: "1",
-  verifyingContract: config.contract.address,
-  salt: "0x" + (42).toString(16).padStart(64, "0"),
-};
-
+// let chainId = 42;
 // let web3: any, walletWeb3: any;
 let biconomy: any;
 
@@ -236,6 +152,8 @@ function App() {
     signerOrProvider: signer,
   });
 
+  // console.log(signer?.provider, isError, isLoading);
+
   const getQuoteFromNetwork = useCallback(async () => {
     setLoadingMessage("Getting Quote from contact ...");
     try {
@@ -262,8 +180,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      // walletWeb3 = new Web3(window.ethereum as any);
-      // console.log(biconomy.interfaceMap);
       getQuoteFromNetwork();
     };
     if (address && chain && signer?.provider) initBiconomy();
@@ -281,52 +197,8 @@ function App() {
     if (newQuote !== "" && contract) {
       setTransactionHash("");
       if (metaTxEnabled) {
-        console.log("Sending meta transaction");
-        let userAddress = address;
-        // const web3 = new Web3(window.ethereum as any);
-        const ethersProvider = new ethers.providers.Web3Provider(
-          window.ethereum as any
-        );
-        const contractInstance = new ethers.Contract(
-          config.contract.address,
-          config.contract.abi as ContractInterface,
-          signer!
-        );
-        let nonce = await contractInstance.getNonce(userAddress);
-        const contractInterface = new ethers.utils.Interface(
-          config.contract.abi
-        );
-        let functionSignature = contractInterface.encodeFunctionData(
-          "setQuote",
-          [newQuote]
-        );
-        console.log(nonce, functionSignature);
-        let message = {
-          nonce: parseInt(nonce),
-          from: userAddress,
-          functionSignature: functionSignature,
-        };
-
-        const dataToSign = JSON.stringify({
-          types: {
-            EIP712Domain: domainType,
-            MetaTransaction: metaTransactionType,
-          },
-          domain: domainData,
-          primaryType: "MetaTransaction",
-          message: message,
-        });
-        console.log(dataToSign);
-
-        // Its important to use eth_signTypedData_v3 and not v4 to get EIP712 signature because we have used salt in domain data
-        // instead of chainId
-        let signature = await ethersProvider.send("eth_signTypedData_v3", [
-          userAddress,
-          dataToSign,
-        ]);
-        console.log("idhar");
-        let { r, s, v } = getSignatureParameters(signature);
-        sendSignedTransaction(address!, functionSignature, r, s, v);
+        showInfoMessage(`Getting user signature`);
+        sendTransaction(address!, newQuote);
       } else {
         console.log("Sending normal transaction");
         let tx = await contract.setQuote(newQuote, {
@@ -343,30 +215,34 @@ function App() {
     }
   };
 
-  const getSignatureParameters = (signature: any) => {
-    if (!ethers.utils.isHexString(signature)) {
-      throw new Error(
-        'Given value "'.concat(signature, '" is not a valid hex string.')
+  const sendTransaction = async (userAddress: string, arg: string) => {
+    try {
+      showInfoMessage(`Sending transaction via Biconomy`);
+      const provider = await biconomy.provider;
+      const contractInstance = new ethers.Contract(
+        config.contract.address,
+        config.contract.abi,
+        biconomy.ethersProvider
       );
+      let { data } = await contractInstance.populateTransaction.setQuote(arg);
+      let txParams = {
+        data: data,
+        to: config.contract.address,
+        from: userAddress,
+        signatureType: "PERSONAL_SIGN",
+      };
+      await provider.send("eth_sendTransaction", [txParams]);
+      biconomy.on("test", (data: any) => console.log("test received", data));
+      biconomy.on("txMined", (data: any) => {
+        console.log("data", data);
+        getQuoteFromNetwork();
+      });
+      getQuoteFromNetwork();
+    } catch (error) {
+      getQuoteFromNetwork();
+      console.log(error);
     }
-    const r = signature.slice(0, 66);
-    const s = "0x".concat(signature.slice(66, 130));
-    let v = "0x".concat(signature.slice(130, 132));
-    v = ethers.BigNumber.from(v).toString();
-    if (![27, 28].includes(Number(v))) v += 27;
-    return {
-      r: r,
-      s: s,
-      v: Number(v),
-    };
   };
-
-  // const contractRead = useContractRead({
-  //   addressOrName: config.contract.address,
-  //   contractInterface: config.contract.abi,
-  //   functionName: "getQuote",
-  // });
-  // console.log(contractRead.data);
 
   const showErrorMessage = (message: string) => {
     // NotificationManager.error(message, "Error", 5000);
@@ -378,57 +254,6 @@ function App() {
 
   const showInfoMessage = (message: string) => {
     // NotificationManager.info(message, "Info", 3000);
-  };
-
-  const sendSignedTransaction = async (
-    userAddress: string,
-    functionData: string,
-    r: string,
-    s: string,
-    v: number
-  ) => {
-    try {
-      showInfoMessage(`Sending transaction via Biconomy`);
-      const provider = await biconomy.provider;
-      const contractInstance = new ethers.Contract(
-        config.contract.address,
-        config.contract.abi,
-        biconomy.ethersProvider
-      );
-      let { data } =
-        await contractInstance.populateTransaction.executeMetaTransaction(
-          userAddress,
-          functionData,
-          r,
-          s,
-          v
-        );
-      let txParams = {
-        data: data,
-        to: config.contract.address,
-        from: userAddress,
-        signatureType: "EIP712_SIGN",
-      };
-      await provider.send("eth_sendTransaction", [txParams]);
-      biconomy.on("test", (data: any) => console.log("test received", data));
-      biconomy.on("txMined", (data: any) => {
-        console.log("data", data);
-        getQuoteFromNetwork();
-      });
-      // showInfoMessage(`Transaction sent. Waiting for confirmation ..`);
-      // await tx.wait(1);
-      // console.log("Transaction hash : ", tx.hash);
-      // //let confirmation = await tx.wait();
-      // console.log(tx);
-      // setTransactionHash(tx.hash);
-
-      // showSuccessMessage("Transaction confirmed on chain");
-      getQuoteFromNetwork();
-    } catch (error) {
-      console.log(error);
-      getQuoteFromNetwork();
-      handleClose();
-    }
   };
 
   return (
