@@ -27,73 +27,12 @@ let abi = require("ethereumjs-abi");
 
 let config = {
   contract: {
-    address: "0x880176EDA9f1608A2Bf182385379bDcC1a65Dfcf",
-    abi: [
-      {
-        inputs: [
-          { internalType: "address", name: "forwarder", type: "address" },
-        ],
-        name: "isTrustedForwarder",
-        outputs: [{ internalType: "bool", name: "", type: "bool" }],
-        stateMutability: "view",
-        type: "function",
-        constant: true,
-      },
-      {
-        inputs: [],
-        name: "owner",
-        outputs: [{ internalType: "address", name: "", type: "address" }],
-        stateMutability: "view",
-        type: "function",
-        constant: true,
-      },
-      {
-        inputs: [],
-        name: "quote",
-        outputs: [{ internalType: "string", name: "", type: "string" }],
-        stateMutability: "view",
-        type: "function",
-        constant: true,
-      },
-      {
-        inputs: [],
-        name: "trustedForwarder",
-        outputs: [{ internalType: "address", name: "", type: "address" }],
-        stateMutability: "view",
-        type: "function",
-        constant: true,
-      },
-      {
-        inputs: [{ internalType: "string", name: "newQuote", type: "string" }],
-        name: "setQuote",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "getQuote",
-        outputs: [
-          { internalType: "string", name: "currentQuote", type: "string" },
-          { internalType: "address", name: "currentOwner", type: "address" },
-        ],
-        stateMutability: "view",
-        type: "function",
-        constant: true,
-      },
-      {
-        inputs: [],
-        name: "versionRecipient",
-        outputs: [{ internalType: "string", name: "", type: "string" }],
-        stateMutability: "view",
-        type: "function",
-        constant: true,
-      },
-    ],
+    address: "0xd03be140122c873ec8a05fab002cdeca814f84df",
+    abi: [ { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "inputs": [], "name": "admin", "outputs": [ { "internalType": "address", "name": "", "type": "address" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getQuote", "outputs": [ { "internalType": "string", "name": "currentQuote", "type": "string" }, { "internalType": "address", "name": "currentOwner", "type": "address" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "forwarder", "type": "address" } ], "name": "isTrustedForwarder", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "owner", "outputs": [ { "internalType": "address", "name": "", "type": "address" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "quote", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "string", "name": "newQuote", "type": "string" } ], "name": "setQuote", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "_trustedForwarder", "type": "address" } ], "name": "setTrustedForwarder", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "trustedForwarder", "outputs": [ { "internalType": "address", "name": "", "type": "address" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "versionRecipient", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" } ]
   },
   apiKey: {
     test: "cNWqZcoBb.4e4c0990-26a8-4a45-b98e-08101f754119",
-    prod: "8nvA_lM_Q.0424c54e-b4b2-4550-98c5-8b437d3118a9",
+    prod: "tNyxHiNaP.056bd335-d91c-49ef-842d-d1dce4da854b",
   },
 };
 

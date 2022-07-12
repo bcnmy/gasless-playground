@@ -27,111 +27,215 @@ let abi = require("ethereumjs-abi");
 
 const config = {
   contract: {
-    address: "0x1E1c36546F6ddD71e8e6aEDf135B82F7EEaA08b9",
+    address: "0xd03be140122c873ec8a05fab002cdeca814f84df",
     abi: [
       {
-        inputs: [
-          { internalType: "address", name: "userAddress", type: "address" },
-          { internalType: "bytes", name: "functionSignature", type: "bytes" },
-          { internalType: "bytes32", name: "sigR", type: "bytes32" },
-          { internalType: "bytes32", name: "sigS", type: "bytes32" },
-          { internalType: "uint8", name: "sigV", type: "uint8" },
-        ],
-        name: "executeMetaTransaction",
-        outputs: [{ internalType: "bytes", name: "", type: "bytes" }],
-        stateMutability: "payable",
-        type: "function",
-      },
-      {
-        anonymous: false,
-        inputs: [
+        "inputs": [
           {
-            indexed: false,
-            internalType: "address",
-            name: "userAddress",
-            type: "address",
+            "internalType": "address",
+            "name": "userAddress",
+            "type": "address"
           },
           {
-            indexed: false,
-            internalType: "addresspayable",
-            name: "relayerAddress",
-            type: "address",
+            "internalType": "bytes",
+            "name": "functionSignature",
+            "type": "bytes"
           },
           {
-            indexed: false,
-            internalType: "bytes",
-            name: "functionSignature",
-            type: "bytes",
+            "internalType": "bytes32",
+            "name": "sigR",
+            "type": "bytes32"
           },
+          {
+            "internalType": "bytes32",
+            "name": "sigS",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "sigV",
+            "type": "uint8"
+          }
         ],
-        name: "MetaTransactionExecuted",
-        type: "event",
-      },
-      {
-        inputs: [{ internalType: "string", name: "newQuote", type: "string" }],
-        name: "setQuote",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "getChainID",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "pure",
-        type: "function",
-      },
-      {
-        inputs: [{ internalType: "address", name: "user", type: "address" }],
-        name: "getNonce",
-        outputs: [{ internalType: "uint256", name: "nonce", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "getQuote",
-        outputs: [
-          { internalType: "string", name: "currentQuote", type: "string" },
-          { internalType: "address", name: "currentOwner", type: "address" },
+        "name": "executeMetaTransaction",
+        "outputs": [
+          {
+            "internalType": "bytes",
+            "name": "",
+            "type": "bytes"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "payable",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "owner",
-        outputs: [{ internalType: "address", name: "", type: "address" }],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "quote",
-        outputs: [{ internalType: "string", name: "", type: "string" }],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [
-          { internalType: "address", name: "owner", type: "address" },
-          { internalType: "uint256", name: "nonce", type: "uint256" },
-          { internalType: "uint256", name: "chainID", type: "uint256" },
-          { internalType: "bytes", name: "functionSignature", type: "bytes" },
-          { internalType: "bytes32", name: "sigR", type: "bytes32" },
-          { internalType: "bytes32", name: "sigS", type: "bytes32" },
-          { internalType: "uint8", name: "sigV", type: "uint8" },
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "userAddress",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "address payable",
+            "name": "relayerAddress",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes",
+            "name": "functionSignature",
+            "type": "bytes"
+          }
         ],
-        name: "verify",
-        outputs: [{ internalType: "bool", name: "", type: "bool" }],
-        stateMutability: "view",
-        type: "function",
+        "name": "MetaTransactionExecuted",
+        "type": "event"
       },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "newQuote",
+            "type": "string"
+          }
+        ],
+        "name": "setQuote",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getChainID",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          }
+        ],
+        "name": "getNonce",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getQuote",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "currentQuote",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "currentOwner",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "quote",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainID",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "functionSignature",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "sigR",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "sigS",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "sigV",
+            "type": "uint8"
+          }
+        ],
+        "name": "verify",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
     ],
   },
   apiKey: {
     test: "cNWqZcoBb.4e4c0990-26a8-4a45-b98e-08101f754119",
-    prod: "8nvA_lM_Q.0424c54e-b4b2-4550-98c5-8b437d3118a9",
+    prod: "rTN0Kt1dE.39ac9ec7-2150-47fe-adac-752615904bd1",
   },
 };
 
