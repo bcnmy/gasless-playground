@@ -9,7 +9,7 @@ import Web3_Custom_PersonalSign from "./Web3_Custom_PersonalSign";
 import Web3_EIP2771_EIP712Sign from './Web3_EIP2771_EIP712Sign';
 import Web3_EIP2771_PersonalSign from './Web3_EIP2771_PersonalSign';
 
-// import Ethers_Custom_EIP712Sign from './components/Ethers_Custom_EIP712Sign';
+import Ethers_Custom_EIP712Sign from './Ethers_Custom_EIP712Sign';
 // import Ethers_Custom_PersonalSign from './components/Ethers_Custom_PersonalSign';
 // import Ethers_EIP2771_EIP712Sign from './components/Ethers_EIP2771_EIP712Sign';
 // import Ethers_Forward_EIP712Sign from './components/Ethers_Forward_EIP712Sign';
@@ -81,8 +81,8 @@ function App() {
         <Tab label="Web3 + Custom + Personal Sign" {...a11yProps(1)} />
         <Tab label="Web3 + EIP2771 + EIP712 Sign" {...a11yProps(2)} />
         <Tab label="Web3 + EIP2771 + Personal Sign" {...a11yProps(3)} />
-        {/* <Tab label="Ethers + Custom + EIP712 Sign" {...a11yProps(4)} />
-        <Tab label="Ethers + Custom + Personal Sign" {...a11yProps(5)} />
+        <Tab label="Ethers + Custom + EIP712 Sign" {...a11yProps(4)} />
+        {/* <Tab label="Ethers + Custom + Personal Sign" {...a11yProps(5)} />
         <Tab label="Ethers + EIP2771 + EIP712 Sign" {...a11yProps(6)} />
         <Tab label="Ethers + EIP2771 + Personal Sign" {...a11yProps(7)} />
         <Tab label="Ethers + Forward + EIP712 Sign" {...a11yProps(8)} /> */}
@@ -100,10 +100,10 @@ function App() {
       <TabPanel value={value} index={3}>
         <Web3_EIP2771_PersonalSign />
       </TabPanel>
-      {/* <TabPanel value={value} index={4}>
+      <TabPanel value={value} index={4}>
         <Ethers_Custom_EIP712Sign />
       </TabPanel>
-      <TabPanel value={value} index={5}>
+      {/* <TabPanel value={value} index={5}>
         <Ethers_Custom_PersonalSign/>
       </TabPanel>
       <TabPanel value={value} index={6}>

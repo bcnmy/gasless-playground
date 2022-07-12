@@ -14,10 +14,10 @@ import reportWebVitals from "./reportWebVitals";
 const { chains, provider, webSocketProvider } = configureChains(
   [
     chain.kovan,
-    chain.goerli,
+    // chain.goerli,
     chain.polygonMumbai,
-    chain.arbitrumRinkeby,
-    chain.optimismKovan,
+    // chain.arbitrumRinkeby,
+    // chain.optimismKovan,
   ],
   [publicProvider()]
 );
