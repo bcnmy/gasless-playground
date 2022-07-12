@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { Box } from "@material-ui/core";
-// import { toBuffer } from "ethereumjs-util";
+import { toBuffer } from "ethereumjs-util";
 // import { config } from "../utils/contractDetails";
 import { AbiItem } from "web3-utils";
 
@@ -210,16 +210,18 @@ function App() {
       setTransactionHash("");
       if (metaTxEnabled) {
         try {
-          const web3 = new Web3(biconomy.provider);
+          const web3 = new Web3(biconomy.provider as any);
           const contractInstance = new web3.eth.Contract(
             config.contract.abi as AbiItem[],
             config.contract.address
           );
-          console.log("imp", address, "EIP712_SIGN");
-          let tx = contractInstance.methods.setQuote(newQuote).send({
-            from: address,
-            signatureType: "EIP712_SIGN",
-          });
+          // console.log(biconomy.EIP712_SIGN);
+          let tx = contractInstance.methods
+            .setQuote(newQuote)
+            .send("eth_sendTransaction", {
+              from: address,
+              signatureType: "PERSONAL_SIGN",
+            });
 
           tx.on("transactionHash", function (hash: string) {
             console.log(`Transaction hash is ${hash}`);

@@ -31,145 +31,145 @@ let config = {
     address: "0x8ae808442aefe3bc1f544811cb0f1dda05895742",
     abi: [
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "address",
-            "name": "userAddress",
-            "type": "address"
+            internalType: "address",
+            name: "userAddress",
+            type: "address",
           },
           {
-            "internalType": "bytes",
-            "name": "functionSignature",
-            "type": "bytes"
+            internalType: "bytes",
+            name: "functionSignature",
+            type: "bytes",
           },
           {
-            "internalType": "bytes32",
-            "name": "sigR",
-            "type": "bytes32"
+            internalType: "bytes32",
+            name: "sigR",
+            type: "bytes32",
           },
           {
-            "internalType": "bytes32",
-            "name": "sigS",
-            "type": "bytes32"
+            internalType: "bytes32",
+            name: "sigS",
+            type: "bytes32",
           },
           {
-            "internalType": "uint8",
-            "name": "sigV",
-            "type": "uint8"
-          }
+            internalType: "uint8",
+            name: "sigV",
+            type: "uint8",
+          },
         ],
-        "name": "executeMetaTransaction",
-        "outputs": [
+        name: "executeMetaTransaction",
+        outputs: [
           {
-            "internalType": "bytes",
-            "name": "",
-            "type": "bytes"
-          }
+            internalType: "bytes",
+            name: "",
+            type: "bytes",
+          },
         ],
-        "stateMutability": "payable",
-        "type": "function"
+        stateMutability: "payable",
+        type: "function",
       },
       {
-        "anonymous": false,
-        "inputs": [
+        anonymous: false,
+        inputs: [
           {
-            "indexed": false,
-            "internalType": "address",
-            "name": "userAddress",
-            "type": "address"
+            indexed: false,
+            internalType: "address",
+            name: "userAddress",
+            type: "address",
           },
           {
-            "indexed": false,
-            "internalType": "address payable",
-            "name": "relayerAddress",
-            "type": "address"
+            indexed: false,
+            internalType: "address payable",
+            name: "relayerAddress",
+            type: "address",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
-            "name": "functionSignature",
-            "type": "bytes"
-          }
+            indexed: false,
+            internalType: "bytes",
+            name: "functionSignature",
+            type: "bytes",
+          },
         ],
-        "name": "MetaTransactionExecuted",
-        "type": "event"
+        name: "MetaTransactionExecuted",
+        type: "event",
       },
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "string",
-            "name": "newQuote",
-            "type": "string"
-          }
+            internalType: "string",
+            name: "newQuote",
+            type: "string",
+          },
         ],
-        "name": "setQuote",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
+        name: "setQuote",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
       },
       {
-        "inputs": [
+        inputs: [
           {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
         ],
-        "name": "getNonce",
-        "outputs": [
+        name: "getNonce",
+        outputs: [
           {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          }
+            internalType: "uint256",
+            name: "nonce",
+            type: "uint256",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
+        stateMutability: "view",
+        type: "function",
       },
       {
-        "inputs": [],
-        "name": "getQuote",
-        "outputs": [
+        inputs: [],
+        name: "getQuote",
+        outputs: [
           {
-            "internalType": "string",
-            "name": "currentQuote",
-            "type": "string"
+            internalType: "string",
+            name: "currentQuote",
+            type: "string",
           },
           {
-            "internalType": "address",
-            "name": "currentOwner",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "currentOwner",
+            type: "address",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
+        stateMutability: "view",
+        type: "function",
       },
       {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
+        inputs: [],
+        name: "owner",
+        outputs: [
           {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
+        stateMutability: "view",
+        type: "function",
       },
       {
-        "inputs": [],
-        "name": "quote",
-        "outputs": [
+        inputs: [],
+        name: "quote",
+        outputs: [
           {
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-          }
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
         ],
-        "stateMutability": "view",
-        "type": "function"
-      }
+        stateMutability: "view",
+        type: "function",
+      },
     ],
   },
   apiKey: {
@@ -198,7 +198,6 @@ let domainData = {
   salt: "0x" + (42).toString(16).padStart(64, "0"),
 };
 
-let chainId = 42;
 let web3: any, walletWeb3: any;
 let biconomy: any;
 
@@ -275,7 +274,7 @@ function App() {
       });
       console.log("idhar 1");
       await biconomy.init();
-      walletWeb3 = new Web3(window.ethereum as any);
+      // walletWeb3 = new Web3(window.ethereum as any);
       console.log("idhar 2");
       console.log(biconomy.interfaceMap);
       getQuoteFromNetwork();
@@ -414,9 +413,9 @@ function App() {
         .send({
           from: userAddress,
         });
-      console.log(tx);
+      console.log("tx hash", tx);
       // setTransactionHash(tx.transactionHash);
-      // tx = await tx.wait(1);
+      // tx = await tx.wait(1);x
       // console.log(`Transaction hash is ${tx.transactionHash}`);
       // showInfoMessage(
       //   `Transaction sent by relayer with hash ${tx.transactionHash}`
@@ -434,6 +433,7 @@ function App() {
       });
     } catch (error) {
       console.log(error);
+      getQuoteFromNetwork();
     }
   };
 

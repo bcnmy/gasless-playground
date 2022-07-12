@@ -22,7 +22,7 @@
   "config-overrides-path": "./config-overrides.js",
   "scripts": {
     "dev": "react-scripts start",
-    "start": "react-scripts start",
+    "start": "rm tsconfig.json && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@rainbow-me)/\"",
     "eject": "react-scripts eject"

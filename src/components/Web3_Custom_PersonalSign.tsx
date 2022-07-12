@@ -268,7 +268,7 @@ function App() {
   const { address } = useAccount();
   const { chain } = useNetwork();
   const provider = useProvider();
-  const { data: signer, isError, isLoading } = useSigner();
+  const { data: signer } = useSigner();
 
   const classes = useStyles();
   const [backdropOpen, setBackdropOpen] = React.useState(true);
@@ -457,12 +457,12 @@ function App() {
         config.contract.address
       );
       console.log(userAddress, functionData, r, s, v);
-      let tx = await contractInstance.methods
+      let tx = contractInstance.methods
         .executeMetaTransaction(userAddress, functionData, r, s, v)
         .send({
           from: userAddress,
         });
-      console.log(tx);
+      console.log(JSON.stringify(tx));
       // setTransactionHash(tx.transactionHash);
       // tx = await tx.wait(1);
       // console.log(`Transaction hash is ${tx.transactionHash}`);
@@ -472,7 +472,7 @@ function App() {
       // showSuccessMessage("Transaction confirmed on chain");
       // getQuoteFromNetwork();
       tx.on("transactionHash", function (hash: any) {
-        console.log(`Transaction hash is ${hash}`);
+        console.log(`Transaction hash is ${JSON.stringify(hash)}`);
         showInfoMessage(`Transaction sent by relayer with hash ${hash}`);
       }).once("confirmation", function (confirmationNumber: any, receipt: any) {
         console.log(receipt);

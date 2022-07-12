@@ -7,7 +7,7 @@ import Box from "@material-ui/core/Box";
 import Web3_Custom_EIP712Sign from './Web3_Custom_EIP712Sign';
 import Web3_Custom_PersonalSign from "./Web3_Custom_PersonalSign";
 import Web3_EIP2771_EIP712Sign from './Web3_EIP2771_EIP712Sign';
-// import Web3_EIP2771_PersonalSign from './Web3_EIP2771_PersonalSign';
+import Web3_EIP2771_PersonalSign from './Web3_EIP2771_PersonalSign';
 
 // import Ethers_Custom_EIP712Sign from './components/Ethers_Custom_EIP712Sign';
 // import Ethers_Custom_PersonalSign from './components/Ethers_Custom_PersonalSign';
@@ -98,7 +98,7 @@ function App() {
         <Web3_EIP2771_EIP712Sign />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        {/* <Web3_EIP2771_PersonalSign /> */}
+        <Web3_EIP2771_PersonalSign />
       </TabPanel>
       {/* <TabPanel value={value} index={4}>
         <Ethers_Custom_EIP712Sign />
