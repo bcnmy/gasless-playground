@@ -402,12 +402,19 @@ function App() {
         config.contract.address
       );
       console.log(userAddress, functionData, r, s, v);
-      let tx = await contractInstance.methods
+      biconomy.on('txHashGenerated', (data: any) => {
+        console.log(data);
+      })
+
+      biconomy.on('txMined', (data: any) => {
+        console.log(data);
+      })
+      const data = await contractInstance.methods
         .executeMetaTransaction(userAddress, functionData, r, s, v)
         .send({
           from: userAddress,
         });
-      console.log("tx hash", tx);
+        console.log('data', data);
       // setTransactionHash(tx.transactionHash);
       // tx = await tx.wait(1);x
       // console.log(`Transaction hash is ${tx.transactionHash}`);
@@ -416,15 +423,15 @@ function App() {
       // );
       // showSuccessMessage("Transaction confirmed on chain");
       // getQuoteFromNetwork();
-      tx.on("transactionHash", function (hash: any) {
-        console.log(`Transaction hash is ${hash}`);
-        showInfoMessage(`Transaction sent by relayer with hash ${hash}`);
-      }).once("confirmation", function (confirmationNumber: any, receipt: any) {
-        console.log(receipt);
-        setTransactionHash(receipt.transactionHash);
-        showSuccessMessage("Transaction confirmed on chain");
-        getQuoteFromNetwork();
-      });
+      // tx.on("transactionHash", function (hash: any) {
+      //   console.log(`Transaction hash is ${hash}`);
+      //   showInfoMessage(`Transaction sent by relayer with hash ${hash}`);
+      // }).once("confirmation", function (confirmationNumber: any, receipt: any) {
+      //   console.log(receipt);
+      //   setTransactionHash(receipt.transactionHash);
+      //   showSuccessMessage("Transaction confirmed on chain");
+      //   getQuoteFromNetwork();
+      // });
     } catch (error) {
       console.log(error);
       getQuoteFromNetwork();
