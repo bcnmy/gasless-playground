@@ -5,15 +5,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-import Web3_Custom_EIP712Sign from './Web3_Custom_EIP712Sign';
+import Web3_Custom_EIP712Sign from "./Web3_Custom_EIP712Sign";
 import Web3_Custom_PersonalSign from "./Web3_Custom_PersonalSign";
-import Web3_EIP2771_EIP712Sign from './Web3_EIP2771_EIP712Sign';
-import Web3_EIP2771_PersonalSign from './Web3_EIP2771_PersonalSign';
+import Web3_EIP2771_EIP712Sign from "./Web3_EIP2771_EIP712Sign";
+import Web3_EIP2771_PersonalSign from "./Web3_EIP2771_PersonalSign";
 
-import Ethers_Custom_EIP712Sign from './Ethers_Custom_EIP712Sign';
-import Ethers_Custom_PersonalSign from './Ethers_Custom_PersonalSign';
-import Ethers_EIP2771_EIP712Sign from './Ethers_EIP2771_EIP712Sign';
-import Ethers_EIP2771_PersonalSign from './Ethers_EIP2771_PersonalSign';
+import Ethers_Custom_EIP712Sign from "./Ethers_Custom_EIP712Sign";
+import Ethers_Custom_PersonalSign from "./Ethers_Custom_PersonalSign";
+import Ethers_EIP2771_EIP712Sign from "./Ethers_EIP2771_EIP712Sign";
+import Ethers_EIP2771_PersonalSign from "./Ethers_EIP2771_PersonalSign";
 // import Ethers_Forward_EIP712Sign from './Ethers_Forward_EIP712Sign';
 
 function TabPanel(props: any) {
@@ -51,12 +51,25 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: "flex",
-    width: "max-content",
+    width: "100%",
+    maxWidth: 900,
     margin: "auto",
-    height: 700,
+    height: "max-content",
+    border: "1px solid #D48158",
+    borderRadius: 25,
+    "@media (max-width:699px)": {
+      flexDirection: "column"
+    },
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    padding: "30px 10px",
+    width: "30%",
+    "@media (max-width:699px)": {
+      width: "90%",
+      margin: "auto"
+    },
   },
 }));
 
@@ -105,7 +118,7 @@ function App() {
         <Ethers_Custom_EIP712Sign />
       </TabPanel>
       <TabPanel value={value} index={5}>
-        <Ethers_Custom_PersonalSign/>
+        <Ethers_Custom_PersonalSign />
       </TabPanel>
       <TabPanel value={value} index={6}>
         <Ethers_EIP2771_EIP712Sign />
