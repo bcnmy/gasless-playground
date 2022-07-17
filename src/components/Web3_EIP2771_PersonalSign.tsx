@@ -7,7 +7,12 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 
 import { Biconomy } from "mexa-sdk-v2";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
-import { configEIP2771 as config, ExternalProvider } from "../utils";
+import {
+  configEIP2771 as config,
+  ExternalProvider,
+  showErrorMessage,
+  showSuccessMessage,
+} from "../utils";
 
 let biconomy: any;
 
@@ -47,15 +52,14 @@ function App() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setTransactionHash("");
-    if (!newQuote) {
-      showErrorMessage("Please enter the quote");
-      return;
-    }
     if (!address) {
       showErrorMessage("Please connect wallet");
       return;
     }
-    setTransactionHash("");
+    if (!newQuote) {
+      showErrorMessage("Please enter the quote");
+      return;
+    }
     try {
       if (metaTxEnabled) {
         const web3 = new Web3(biconomy.provider as any);
@@ -63,6 +67,15 @@ function App() {
           config.contract.abi as AbiItem[],
           config.contract.address
         );
+        biconomy.on("txHashGenerated", (data: any) => {
+          console.log(data);
+          showSuccessMessage(`tx hash ${data.hash}`);
+        });
+        biconomy.on("txMined", (data: any) => {
+          console.log(data);
+          showSuccessMessage(`tx mined ${data.hash}`);
+          fetchQuote();
+        });
         let tx = contractInstance.methods
           .setQuote(newQuote)
           .send("eth_sendTransaction", {
@@ -70,14 +83,6 @@ function App() {
             signatureType: "PERSONAL_SIGN",
           });
         console.log(tx);
-        biconomy.on("txHashGenerated", (data: any) => {
-          console.log(data);
-        });
-
-        biconomy.on("txMined", (data: any) => {
-          console.log(data);
-          fetchQuote();
-        });
       } else {
         console.log("Sending normal transaction");
         const web3 = new Web3(window.ethereum as any);
@@ -99,18 +104,6 @@ function App() {
       console.log(err);
       fetchQuote();
     }
-  };
-
-  const showErrorMessage = (message: string) => {
-    // NotificationManager.error(message, "Error", 5000);
-  };
-
-  const showSuccessMessage = (message: string) => {
-    // NotificationManager.success(message, "Message", 3000);
-  };
-
-  const showInfoMessage = (message: string) => {
-    // NotificationManager.info(message, "Info", 3000);
   };
 
   return (

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 
 // import '@rainbow-me/rainbowkit/styles.css';
 import '@rainbow-me/rainbowkit/dist/index.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
@@ -14,10 +15,7 @@ import reportWebVitals from "./reportWebVitals";
 const { chains, provider, webSocketProvider } = configureChains(
   [
     chain.kovan,
-    // chain.goerli,
     chain.polygonMumbai,
-    // chain.arbitrumRinkeby,
-    // chain.optimismKovan,
   ],
   [publicProvider()]
 );

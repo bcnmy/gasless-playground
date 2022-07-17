@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "./components/Navbar";
 import Body from "./components/TabsBody";
+import { ToastContainer } from 'react-toastify';
 
 const App: React.FC = () => {
   const classes = useStyles();
@@ -10,6 +11,7 @@ const App: React.FC = () => {
     <div className={classes.bgCover}>
       <Navbar />
       <Body />
+      <ToastContainer />
     </div>
   );
 };

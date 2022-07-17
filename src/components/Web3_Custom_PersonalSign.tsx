@@ -11,7 +11,10 @@ import {
   configCustom_PersonalSign as config,
   getSignatureParametersWeb3,
   ExternalProvider,
+  showErrorMessage,
+  showSuccessMessage,
 } from "../utils";
+
 import { toBuffer } from "ethereumjs-util";
 let abi = require("ethereumjs-abi");
 
@@ -70,12 +73,12 @@ function App() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setTransactionHash("");
-    if (!newQuote) {
-      showErrorMessage("Please enter the quote");
-      return;
-    }
     if (!address) {
       showErrorMessage("Please connect wallet");
+      return;
+    }
+    if (!newQuote) {
+      showErrorMessage("Please enter the quote");
       return;
     }
     if (metaTxEnabled) {
@@ -118,18 +121,6 @@ function App() {
     }
   };
 
-  const showErrorMessage = (message: string) => {
-    // NotificationManager.error(message, "Error", 5000);
-  };
-
-  const showSuccessMessage = (message: string) => {
-    // NotificationManager.success(message, "Message", 3000);
-  };
-
-  const showInfoMessage = (message: string) => {
-    // NotificationManager.info(message, "Info", 3000);
-  };
-
   const sendSignedTransaction = async (
     userAddress: string,
     functionData: string,
@@ -145,16 +136,19 @@ function App() {
       );
       biconomy.on("txHashGenerated", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx hash ${data.hash}`);
       });
-
       biconomy.on("txMined", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx mined ${data.hash}`);
+        fetchQuote();
       });
-      await contractInstance.methods
+      const tx = await contractInstance.methods
         .executeMetaTransaction(userAddress, functionData, r, s, v)
         .send({
           from: userAddress,
         });
+      console.log(tx);
       fetchQuote();
     } catch (error) {
       console.log(error);

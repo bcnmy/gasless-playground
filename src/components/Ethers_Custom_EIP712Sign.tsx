@@ -11,6 +11,9 @@ import {
   configCustom_EIP712Sign as config,
   getSignatureParametersEthers,
   ExternalProvider,
+  showErrorMessage,
+  showInfoMessage,
+  showSuccessMessage,
 } from "../utils";
 
 const domainType = [
@@ -70,15 +73,14 @@ function App() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setTransactionHash("");
-    if (!newQuote) {
-      showErrorMessage("Please enter the quote");
-      return;
-    }
     if (!address) {
       showErrorMessage("Please connect wallet");
       return;
     }
-    setTransactionHash("");
+    if (!newQuote) {
+      showErrorMessage("Please enter the quote");
+      return;
+    }
     if (metaTxEnabled) {
       console.log("Sending meta transaction");
       let userAddress = address;
@@ -120,7 +122,6 @@ function App() {
         userAddress,
         dataToSign,
       ]);
-      console.log("idhar");
       let { r, s, v } = getSignatureParametersEthers(signature);
       sendSignedTransaction(address!, functionSignature, r, s, v);
     } else {
@@ -134,18 +135,6 @@ function App() {
       showSuccessMessage("Transaction confirmed");
       fetchQuote();
     }
-  };
-
-  const showErrorMessage = (message: string) => {
-    // NotificationManager.error(message, "Error", 5000);
-  };
-
-  const showSuccessMessage = (message: string) => {
-    // NotificationManager.success(message, "Message", 3000);
-  };
-
-  const showInfoMessage = (message: string) => {
-    // NotificationManager.info(message, "Info", 3000);
   };
 
   const sendSignedTransaction = async (
@@ -181,9 +170,12 @@ function App() {
       console.log(tx);
       biconomy.on("txHashGenerated", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx hash ${data.hash}`);
       });
       biconomy.on("txMined", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx mined ${data.hash}`);
+        fetchQuote();
       });
     } catch (error) {
       console.log(error);
