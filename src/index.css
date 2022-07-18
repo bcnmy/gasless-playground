@@ -23,6 +23,10 @@ body {
   padding: 10px;
 }
 
+.Toastify__toast-body {
+  word-break: break-all;
+}
+
 .tabpanel {
   width: 70%;
   padding: 30px 10px;

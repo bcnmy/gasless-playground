@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
 
 import configEIP2771 from "./configs/EIP2771.json";
 import configCustom_EIP712Sign from "./configs/Custom_EIP712Sign.json";
@@ -58,4 +59,48 @@ export type ExternalProvider = {
     callback: (error: any, response: any) => void
   ) => void;
   request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
+};
+
+export const showErrorMessage = (message: string) => {
+  toast.error(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const showInfoMessage = (message: string) => {
+  toast.info(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const showSuccessMessage = (message: string) => {
+  toast.success(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+export const showSuccessMessagePending = (promise: Promise<void>) => {
+  toast.promise(promise, {
+    pending: "Promise is pending",
+    success: "Promise resolved 👌",
+    error: "Promise rejected 🤯",
+  });
 };

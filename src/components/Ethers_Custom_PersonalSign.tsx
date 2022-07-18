@@ -10,11 +10,13 @@ import {
   configCustom_PersonalSign as config,
   ExternalProvider,
   getSignatureParametersEthers,
+  showErrorMessage,
+  showInfoMessage,
+  showSuccessMessage,
 } from "../utils";
 import { toBuffer } from "ethereumjs-util";
 let abi = require("ethereumjs-abi");
 
-let salt = 42;
 let biconomy: any;
 
 function App() {
@@ -44,7 +46,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
@@ -65,12 +66,12 @@ function App() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setTransactionHash("");
-    if (!newQuote) {
-      showErrorMessage("Please enter the quote");
-      return;
-    }
     if (!address) {
       showErrorMessage("Please connect wallet");
+      return;
+    }
+    if (!newQuote) {
+      showErrorMessage("Please enter the quote");
       return;
     }
     setTransactionHash("");
@@ -93,12 +94,11 @@ function App() {
       ]);
       let messageToSign = constructMetaTransactionMessage(
         nonce.toNumber(),
-        salt,
+        Number(chain?.network!), // salt
         functionSignature,
         config.contract.address
       );
       const signature = await walletProvider.signMessage(messageToSign);
-      console.log("messageToSign", messageToSign);
 
       let { r, s, v } = getSignatureParametersEthers(signature);
       console.log(r, s, v);
@@ -114,18 +114,6 @@ function App() {
       // showSuccessMessage("Transaction confirmed");
       fetchQuote();
     }
-  };
-
-  const showErrorMessage = (message: string) => {
-    // NotificationManager.error(message, "Error", 5000);
-  };
-
-  const showSuccessMessage = (message: string) => {
-    // NotificationManager.success(message, "Message", 3000);
-  };
-
-  const showInfoMessage = (message: string) => {
-    // NotificationManager.info(message, "Info", 3000);
   };
 
   const sendSignedTransaction = async (
@@ -161,9 +149,12 @@ function App() {
       console.log(tx);
       biconomy.on("txHashGenerated", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx hash ${data.hash}`);
       });
       biconomy.on("txMined", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx mined ${data.hash}`);
+        fetchQuote();
       });
     } catch (error) {
       console.log(error);

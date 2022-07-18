@@ -11,7 +11,10 @@ import {
   configCustom_PersonalSign as config,
   getSignatureParametersWeb3,
   ExternalProvider,
+  showErrorMessage,
+  showSuccessMessage,
 } from "../utils";
+
 import { toBuffer } from "ethereumjs-util";
 let abi = require("ethereumjs-abi");
 
@@ -44,7 +47,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       web3 = new Web3(window.ethereum as any);
       contractInstance = await new web3.eth.Contract(
         config.contract.abi as AbiItem[],
@@ -70,36 +72,32 @@ function App() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setTransactionHash("");
-    if (!newQuote) {
-      showErrorMessage("Please enter the quote");
-      return;
-    }
     if (!address) {
       showErrorMessage("Please connect wallet");
+      return;
+    }
+    if (!newQuote) {
+      showErrorMessage("Please enter the quote");
       return;
     }
     if (metaTxEnabled) {
       console.log("Sending meta transaction");
       const nonce = await contractInstance.methods.getNonce(address).call();
-      console.log(nonce);
       let functionSignature = await contractInstance.methods
         .setQuote(newQuote)
         .encodeABI();
-      console.log(functionSignature);
       let messageToSign = await constructMetaTransactionMessage(
         nonce,
         Number(chain?.network!),
         functionSignature,
         config.contract.address
       );
-      console.log("messageToSign", messageToSign);
 
       // NOTE: We are using wallet web3 here to get signature from connected wallet
       const signature = await web3.eth.personal.sign(
         "0x" + messageToSign.toString("hex"),
         address
       );
-      console.log(signature);
 
       // NOTE: Using wallet web3 here, as it is connected to the wallet where user account is present.
       let { r, s, v } = getSignatureParametersWeb3(signature);
@@ -118,18 +116,6 @@ function App() {
     }
   };
 
-  const showErrorMessage = (message: string) => {
-    // NotificationManager.error(message, "Error", 5000);
-  };
-
-  const showSuccessMessage = (message: string) => {
-    // NotificationManager.success(message, "Message", 3000);
-  };
-
-  const showInfoMessage = (message: string) => {
-    // NotificationManager.info(message, "Info", 3000);
-  };
-
   const sendSignedTransaction = async (
     userAddress: string,
     functionData: string,
@@ -145,16 +131,19 @@ function App() {
       );
       biconomy.on("txHashGenerated", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx hash ${data.hash}`);
       });
-
       biconomy.on("txMined", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx mined ${data.hash}`);
+        fetchQuote();
       });
-      await contractInstance.methods
+      const tx = await contractInstance.methods
         .executeMetaTransaction(userAddress, functionData, r, s, v)
         .send({
           from: userAddress,
         });
+      console.log(tx);
       fetchQuote();
     } catch (error) {
       console.log(error);

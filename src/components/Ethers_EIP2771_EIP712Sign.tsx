@@ -6,7 +6,13 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 
 import { Biconomy } from "mexa-sdk-v2";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
-import { configEIP2771 as config, ExternalProvider } from "../utils";
+import {
+  configEIP2771 as config,
+  ExternalProvider,
+  showErrorMessage,
+  showInfoMessage,
+  showSuccessMessage,
+} from "../utils";
 
 let biconomy: any;
 
@@ -37,7 +43,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
@@ -46,12 +51,12 @@ function App() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setTransactionHash("");
-    if (!newQuote) {
-      showErrorMessage("Please enter the quote");
-      return;
-    }
     if (!address) {
       showErrorMessage("Please connect wallet");
+      return;
+    }
+    if (!newQuote) {
+      showErrorMessage("Please enter the quote");
       return;
     }
     setTransactionHash("");
@@ -91,27 +96,17 @@ function App() {
       console.log(tx);
       biconomy.on("txHashGenerated", (data: any) => {
         console.log(data);
+        showSuccessMessage(`tx hash ${data.hash}`);
       });
       biconomy.on("txMined", (data: any) => {
         console.log(data);
-        fetchQuote()
+        showSuccessMessage(`tx mined ${data.hash}`);
+        fetchQuote();
       });
     } catch (error) {
       fetchQuote();
       console.log(error);
     }
-  };
-
-  const showErrorMessage = (message: string) => {
-    // NotificationManager.error(message, "Error", 5000);
-  };
-
-  const showSuccessMessage = (message: string) => {
-    // NotificationManager.success(message, "Message", 3000);
-  };
-
-  const showInfoMessage = (message: string) => {
-    // NotificationManager.info(message, "Info", 3000);
   };
 
   return (
