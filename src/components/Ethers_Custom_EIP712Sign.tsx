@@ -64,7 +64,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
@@ -98,7 +97,6 @@ function App() {
       let functionSignature = contractInterface.encodeFunctionData("setQuote", [
         newQuote,
       ]);
-      console.log(nonce, functionSignature);
       let message = {
         nonce: parseInt(nonce),
         from: userAddress,
@@ -114,7 +112,6 @@ function App() {
         primaryType: "MetaTransaction",
         message: message,
       });
-      console.log(dataToSign);
 
       // Its important to use eth_signTypedData_v3 and not v4 to get EIP712 signature because we have used salt in domain data
       // instead of chainId

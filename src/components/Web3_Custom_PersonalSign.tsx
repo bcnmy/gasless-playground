@@ -47,7 +47,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       web3 = new Web3(window.ethereum as any);
       contractInstance = await new web3.eth.Contract(
         config.contract.abi as AbiItem[],
@@ -84,25 +83,21 @@ function App() {
     if (metaTxEnabled) {
       console.log("Sending meta transaction");
       const nonce = await contractInstance.methods.getNonce(address).call();
-      console.log(nonce);
       let functionSignature = await contractInstance.methods
         .setQuote(newQuote)
         .encodeABI();
-      console.log(functionSignature);
       let messageToSign = await constructMetaTransactionMessage(
         nonce,
         Number(chain?.network!),
         functionSignature,
         config.contract.address
       );
-      console.log("messageToSign", messageToSign);
 
       // NOTE: We are using wallet web3 here to get signature from connected wallet
       const signature = await web3.eth.personal.sign(
         "0x" + messageToSign.toString("hex"),
         address
       );
-      console.log(signature);
 
       // NOTE: Using wallet web3 here, as it is connected to the wallet where user account is present.
       let { r, s, v } = getSignatureParametersWeb3(signature);

@@ -46,7 +46,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
@@ -100,7 +99,6 @@ function App() {
         config.contract.address
       );
       const signature = await walletProvider.signMessage(messageToSign);
-      console.log("messageToSign", messageToSign);
 
       let { r, s, v } = getSignatureParametersEthers(signature);
       console.log(r, s, v);

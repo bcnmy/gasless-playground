@@ -43,7 +43,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();

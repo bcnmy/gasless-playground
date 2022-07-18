@@ -64,7 +64,6 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
-      console.log(biconomy.interfaceMap);
       web3 = new Web3(window.ethereum as any);
       contractInstance = await new web3.eth.Contract(
         config.contract.abi as AbiItem[],
