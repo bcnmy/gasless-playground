@@ -5,7 +5,7 @@ import { Link, Backdrop, makeStyles } from "@material-ui/core";
 import { ethers, ContractInterface } from "ethers";
 import { useAccount, useNetwork, useSigner } from "wagmi";
 
-import { Biconomy } from "mexa-sdk-v2";
+import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
   configCustom_EIP712Sign as config,

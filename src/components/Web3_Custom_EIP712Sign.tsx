@@ -6,7 +6,7 @@ import { IpcProviderBase } from "web3-core-helpers";
 import { AbiItem } from "web3-utils";
 import { useAccount, useNetwork, useSigner } from "wagmi";
 
-import { Biconomy } from "mexa-sdk-v2";
+import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
   configCustom_EIP712Sign as config,
