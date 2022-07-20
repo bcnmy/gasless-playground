@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-// import '@rainbow-me/rainbowkit/styles.css';
-import "@rainbow-me/rainbowkit/dist/index.css";
+import '@rainbow-me/rainbowkit/styles.css';
+// import "@rainbow-me/rainbowkit/dist/index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
