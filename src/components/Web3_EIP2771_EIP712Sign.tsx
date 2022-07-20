@@ -5,7 +5,7 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import { useAccount, useNetwork, useSigner } from "wagmi";
 
-import { Biconomy } from "mexa-sdk-v2";
+import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
   configEIP2771 as config,
