@@ -7,7 +7,7 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
-  configCustom_PersonalSign as config,
+  getConfig,
   ExternalProvider,
   getSignatureParametersEthers,
   showErrorMessage,
@@ -30,6 +30,14 @@ function App() {
   const [newQuote, setNewQuote] = useState("");
   const [metaTxEnabled] = useState(true);
   const [transactionHash, setTransactionHash] = useState("");
+  const [config, setConfig] = useState(getConfig("").configCustom_PersonalSign);
+
+  useEffect(() => {
+    const conf = getConfig(
+      chain?.id.toString() || ""
+    ).configCustom_PersonalSign;
+    setConfig(conf);
+  }, [chain?.id]);
 
   const { quote, owner, fetchQuote } = useGetQuoteFromNetwork(
     config.contract.address,
@@ -46,10 +54,11 @@ function App() {
         contractAddresses: [config.contract.address],
       });
       await biconomy.init();
+      console.log(biconomy.dappApiMap);
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
-  }, [address, chain, signer?.provider]);
+  }, [address, chain, config, signer?.provider]);
 
   const constructMetaTransactionMessage = (
     nonce: any,
@@ -64,6 +73,7 @@ function App() {
   };
 
   const onSubmit = async (e: any) => {
+    console.log(config.contract.address);
     e.preventDefault();
     setTransactionHash("");
     if (!address) {
@@ -87,7 +97,7 @@ function App() {
         config.contract.abi,
         biconomy.ethersProvider
       );
-      let nonce = await contractInstance.getNonce(userAddress);
+      let nonce = await contractInstance.nonces(userAddress);
       const contractInterface = new ethers.utils.Interface(config.contract.abi);
       let functionSignature = contractInterface.encodeFunctionData("setQuote", [
         newQuote,
@@ -145,6 +155,7 @@ function App() {
         from: userAddress,
         signatureType: "PERSONAL_SIGN",
       };
+      console.log(txParams)
       const tx = await provider.send("eth_sendTransaction", [txParams]);
       console.log(tx);
       biconomy.on("txHashGenerated", (data: any) => {

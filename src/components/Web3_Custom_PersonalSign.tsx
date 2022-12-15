@@ -8,7 +8,7 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
-  configCustom_PersonalSign as config,
+  getConfig,
   getSignatureParametersWeb3,
   ExternalProvider,
   showErrorMessage,
@@ -31,6 +31,14 @@ function App() {
   const [newQuote, setNewQuote] = useState("");
   const [metaTxEnabled] = useState(true);
   const [transactionHash, setTransactionHash] = useState("");
+  const [config, setConfig] = useState(getConfig("").configCustom_PersonalSign);
+
+  useEffect(() => {
+    const conf = getConfig(
+      chain?.id.toString() || ""
+    ).configCustom_PersonalSign;
+    setConfig(conf);
+  }, [chain?.id]);
 
   const { quote, owner, fetchQuote } = useGetQuoteFromNetwork(
     config.contract.address,
@@ -55,7 +63,7 @@ function App() {
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
-  }, [address, chain, signer?.provider]);
+  }, [address, chain, config, signer?.provider]);
 
   const constructMetaTransactionMessage = (
     nonce: any,

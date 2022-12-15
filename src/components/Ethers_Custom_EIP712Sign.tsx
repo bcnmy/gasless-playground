@@ -8,31 +8,13 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
-  configCustom_EIP712Sign as config,
+  getConfig,
   getSignatureParametersEthers,
   ExternalProvider,
   showErrorMessage,
   showInfoMessage,
   showSuccessMessage,
 } from "../utils";
-
-const domainType = [
-  { name: "name", type: "string" },
-  { name: "version", type: "string" },
-  { name: "verifyingContract", type: "address" },
-  { name: "salt", type: "bytes32" },
-];
-const metaTransactionType = [
-  { name: "nonce", type: "uint256" },
-  { name: "from", type: "address" },
-  { name: "functionSignature", type: "bytes" },
-];
-let domainData = {
-  name: "TestContract",
-  version: "1",
-  verifyingContract: config.contract.address,
-  salt: "0x" + (42).toString(16).padStart(64, "0"),
-};
 
 let biconomy: any;
 
@@ -48,7 +30,12 @@ function App() {
   const [newQuote, setNewQuote] = useState("");
   const [metaTxEnabled] = useState(true);
   const [transactionHash, setTransactionHash] = useState("");
+  const [config, setConfig] = useState(getConfig("").configCustom_EIP712Sign);
 
+  useEffect(() => {
+    const conf = getConfig(chain?.id.toString() || "").configCustom_EIP712Sign;
+    setConfig(conf);
+  }, [chain?.id]);
   const { quote, owner, fetchQuote } = useGetQuoteFromNetwork(
     config.contract.address,
     config.contract.abi
@@ -67,7 +54,7 @@ function App() {
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
-  }, [address, chain, signer?.provider]);
+  }, [address, chain, config, signer?.provider]);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -87,6 +74,23 @@ function App() {
       const ethersProvider = new ethers.providers.Web3Provider(
         window.ethereum as any
       );
+      const domainType = [
+        { name: "name", type: "string" },
+        { name: "version", type: "string" },
+        { name: "verifyingContract", type: "address" },
+        { name: "salt", type: "bytes32" },
+      ];
+      const metaTransactionType = [
+        { name: "nonce", type: "uint256" },
+        { name: "from", type: "address" },
+        { name: "functionSignature", type: "bytes" },
+      ];
+      let domainData = {
+        name: "TestContract",
+        version: "1",
+        verifyingContract: config.contract.address,
+        salt: "0x" + (42).toString(16).padStart(64, "0"),
+      };
       const contractInstance = new ethers.Contract(
         config.contract.address,
         config.contract.abi as ContractInterface,

@@ -8,7 +8,7 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
-  configEIP2771 as config,
+  getConfig,
   ExternalProvider,
   showErrorMessage,
   showSuccessMessage,
@@ -27,6 +27,12 @@ function App() {
   const [newQuote, setNewQuote] = useState("");
   const [metaTxEnabled] = useState(true);
   const [transactionHash, setTransactionHash] = useState("");
+  const [config, setConfig] = useState(getConfig("").configEIP2771);
+
+  useEffect(() => {
+    const conf = getConfig(chain?.id.toString() || "").configEIP2771;
+    setConfig(conf);
+  }, [chain?.id]);
 
   const { quote, owner, fetchQuote } = useGetQuoteFromNetwork(
     config.contract.address,
@@ -46,7 +52,7 @@ function App() {
       setBackdropOpen(false);
     };
     if (address && chain && signer?.provider) initBiconomy();
-  }, [address, chain, signer?.provider]);
+  }, [address, chain, config, signer?.provider]);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();

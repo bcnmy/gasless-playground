@@ -2,11 +2,36 @@ import Web3 from "web3";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 
-import configEIP2771 from "./configs/EIP2771.json";
-import configCustom_EIP712Sign from "./configs/Custom_EIP712Sign.json";
-import configCustom_PersonalSign from "./configs/Custom_PersonalSign.json";
+import configEIP2771_5 from "./configs/5/EIP2771.json";
+import configCustom_EIP712Sign_5 from "./configs/5/Custom_EIP712Sign.json";
+import configCustom_PersonalSign_5 from "./configs/5/Custom_PersonalSign.json";
+import configEIP2771_80001 from "./configs/80001/EIP2771.json";
+import configCustom_EIP712Sign_80001 from "./configs/80001/Custom_EIP712Sign.json";
+import configCustom_PersonalSign_80001 from "./configs/80001/Custom_PersonalSign.json";
 
-export { configEIP2771, configCustom_EIP712Sign, configCustom_PersonalSign };
+export const getConfig = (chainId: string) => {
+  if (chainId === "5") {
+    return {
+      configEIP2771: configEIP2771_5,
+      configCustom_EIP712Sign: configCustom_EIP712Sign_5,
+      configCustom_PersonalSign: configCustom_PersonalSign_5,
+    };
+  } else if (chainId === "80001") {
+    return {
+      configEIP2771: configEIP2771_80001,
+      configCustom_EIP712Sign: configCustom_EIP712Sign_80001,
+      configCustom_PersonalSign: configCustom_PersonalSign_80001,
+    };
+  } else {
+    return {
+      configEIP2771: configEIP2771_80001,
+      configCustom_EIP712Sign: configCustom_EIP712Sign_80001,
+      configCustom_PersonalSign: configCustom_PersonalSign_80001,
+    };
+  }
+};
+
+// export { configEIP2771, configCustom_EIP712Sign, configCustom_PersonalSign };
 
 export const getSignatureParametersWeb3 = (signature: any) => {
   const web3 = new Web3(window.ethereum as any);

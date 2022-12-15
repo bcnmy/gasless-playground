@@ -1,8 +1,9 @@
 {
   "contract": {
-    "address": "0xd03be140122c873ec8a05fab002cdeca814f84df",
+    "address": "0x982d23126e973ecCbF43AF9FE95455442Acf6C21",
     "abi": [
       {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address",
@@ -38,6 +39,7 @@
             "type": "bytes"
           }
         ],
+        "payable": true,
         "stateMutability": "payable",
         "type": "function"
       },
@@ -67,6 +69,7 @@
         "type": "event"
       },
       {
+        "constant": false,
         "inputs": [
           {
             "internalType": "string",
@@ -76,42 +79,27 @@
         ],
         "name": "setQuote",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [],
         "name": "getChainID",
         "outputs": [
           {
             "internalType": "uint256",
-            "name": "",
+            "name": "id",
             "type": "uint256"
           }
         ],
-        "stateMutability": "pure",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          }
-        ],
-        "name": "getNonce",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          }
-        ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [],
         "name": "getQuote",
         "outputs": [
@@ -126,10 +114,33 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "nonces",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
         "inputs": [],
         "name": "owner",
         "outputs": [
@@ -139,10 +150,12 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [],
         "name": "quote",
         "outputs": [
@@ -152,10 +165,12 @@
             "type": "string"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [
           {
             "internalType": "address",
@@ -201,13 +216,14 @@
             "type": "bool"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       }
     ]
   },
   "apiKey": {
-    "test": "cNWqZcoBb.4e4c0990-26a8-4a45-b98e-08101f754119",
-    "prod": "rTN0Kt1dE.39ac9ec7-2150-47fe-adac-752615904bd1"
+    "test": "GHktScbP8.e3cbfc1a-e106-4603-acab-bbacf241f885",
+    "prod": "GHktScbP8.e3cbfc1a-e106-4603-acab-bbacf241f885"
   }
 }
