@@ -89,7 +89,7 @@ function App() {
         name: "TestContract",
         version: "1",
         verifyingContract: config.contract.address,
-        salt: "0x" + (42).toString(16).padStart(64, "0"),
+        salt: "0x" + (chain?.id || 80001).toString(16).padStart(64, "0"),
       };
       const contractInstance = new ethers.Contract(
         config.contract.address,
