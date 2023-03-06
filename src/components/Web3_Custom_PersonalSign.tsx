@@ -49,7 +49,7 @@ function App() {
     const initBiconomy = async () => {
       setBackdropOpen(true);
       setLoadingMessage("Initializing Biconomy ...");
-      biconomy = new Biconomy(window.ethereum as ExternalProvider, {
+      biconomy = new Biconomy((signer?.provider as any).provider, {
         apiKey: config.apiKey.prod,
         debug: true,
         contractAddresses: [config.contract.address],

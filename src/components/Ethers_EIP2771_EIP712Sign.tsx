@@ -43,7 +43,7 @@ function App() {
     const initBiconomy = async () => {
       setBackdropOpen(true);
       setLoadingMessage("Initializing Biconomy ...");
-      biconomy = new Biconomy(window.ethereum as ExternalProvider, {
+      biconomy = new Biconomy((signer?.provider as any).provider, {
         apiKey: config.apiKey.prod,
         debug: true,
         contractAddresses: [config.contract.address],
@@ -91,13 +91,15 @@ function App() {
         config.contract.abi,
         biconomy.ethersProvider
       );
-      let { data } = await contractInstance.populateTransaction.setQuote(arg);
+      let { data } = await contractInstance.populateTransaction.claim(1);
       let txParams = {
         data: data,
         to: config.contract.address,
-        from: userAddress,
+        from: "0xE041608922d06a4F26C0d4c27d8bCD01daf1f792",
         signatureType: "EIP712_SIGN",
+        gasLimit: 5000000,
       };
+      console.log("txParams", txParams);
       const tx = await provider.send("eth_sendTransaction", [txParams]);
       console.log(tx);
       biconomy.on("txHashGenerated", (data: any) => {
