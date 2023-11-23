@@ -98,13 +98,18 @@ function App() {
         from: userAddress,
         signatureType: "PERSONAL_SIGN",
       };
+      console.time("eth_sendTransaction");
       const tx = await provider.send("eth_sendTransaction", [txParams]);
+      console.timeEnd("eth_sendTransaction");
+
       console.log(tx);
       biconomy.on("txHashGenerated", (data: any) => {
+        console.log("txHashGenerated at: ", Date.now())
         console.log(data);
         showSuccessMessage(`tx hash ${data.hash}`);
       });
       biconomy.on("txMined", (data: any) => {
+        console.log("txMined at: ", Date.now())
         console.log(data);
         showSuccessMessage(`tx mined ${data.hash}`);
         fetchQuote();

@@ -5,6 +5,8 @@ import { ethers } from "ethers";
 import { useAccount, useNetwork, useSigner } from "wagmi";
 
 import { Biconomy } from "@biconomy/mexa";
+import { EthereumProvider } from '@walletconnect/ethereum-provider'
+
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
   getConfig,
@@ -15,6 +17,7 @@ import {
 } from "../utils";
 
 let biconomy: any;
+let walletConnectEthereumProvider: any;
 
 function App() {
   const classes = useStyles();
@@ -40,27 +43,56 @@ function App() {
   );
 
   useEffect(() => {
-    const initBiconomy = async () => {
+    console.log("initWalletConnect")
+    const initWalletConnect = async () => {
+      walletConnectEthereumProvider = await EthereumProvider.init({
+        projectId: "caae1b850708e83462d6c02609a02657", // REQUIRED your projectId
+        chains: [80001], // REQUIRED chain ids
+        showQrModal: true, // REQUIRED set to "true" to use @walletconnect/modal
+        methods: [
+          "eth_sendTransaction",
+          "eth_signTransaction",
+          "eth_sign",
+          "personal_sign",
+          "eth_signTypedData"
+        ], // REQUIRED ethereum methods
+        events: ["chainChanged", "accountsChanged"], // REQUIRED ethereum events
+        optionalMethods: ['eth_signTypedData_v4']
+      });
+
+      console.log('userAddress', walletConnectEthereumProvider.accounts[0]);
+
       setBackdropOpen(true);
       setLoadingMessage("Initializing Biconomy ...");
-      biconomy = new Biconomy((signer?.provider as any).provider, {
+      await walletConnectEthereumProvider.connect();
+      const ethersProvider = new ethers.providers.Web3Provider(walletConnectEthereumProvider.signer);
+      biconomy = new Biconomy(ethersProvider, {
         apiKey: config.apiKey.prod,
         debug: true,
         contractAddresses: [config.contract.address],
       });
-      await biconomy.init();
       setBackdropOpen(false);
-    };
-    if (address && chain && signer?.provider) initBiconomy();
-  }, [address, chain, config, signer?.provider]);
+  
+      biconomy.onEvent(biconomy.READY, async () => {
+        console.log("BICONOMY IS READY")
+      }).onEvent(biconomy.ERROR, (error: any, message: any) => {
+        // Handle error while initializing mexa
+        console.log(message);
+        console.log(error);
+      });
+    }
+
+    initWalletConnect();
+
+  }, []);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setTransactionHash("");
-    if (!address) {
-      showErrorMessage("Please connect wallet");
-      return;
-    }
+    // if (!address) {
+    //   showErrorMessage("Please connect wallet");
+    //   return;
+    // }
     if (!newQuote) {
       showErrorMessage("Please enter the quote");
       return;
@@ -89,30 +121,12 @@ function App() {
       const contractInstance = new ethers.Contract(
         config.contract.address,
         config.contract.abi,
-        biconomy.ethersProvider
+        biconomy.getSignerByAddress(walletConnectEthereumProvider.accounts[0])
       );
-      let { data } = await contractInstance.populateTransaction.claim(1);
-      let txParams = {
-        data: data,
-        to: config.contract.address,
-        from: "0xE041608922d06a4F26C0d4c27d8bCD01daf1f792",
-        signatureType: "EIP712_SIGN",
-        gasLimit: 5000000,
-      };
-      console.log("txParams", txParams);
-      const tx = await provider.send("eth_sendTransaction", [txParams]);
-      console.log(tx);
-      biconomy.on("txHashGenerated", (data: any) => {
-        console.log(data);
-        showSuccessMessage(`tx hash ${data.hash}`);
-      });
-      biconomy.on("txMined", (data: any) => {
-        console.log(data);
-        showSuccessMessage(`tx mined ${data.hash}`);
-        fetchQuote();
-      });
+      console.log('provider', provider);
+      let tx = await contractInstance.setQuote(arg);
+        console.log(tx);
     } catch (error) {
-      fetchQuote();
       console.log(error);
     }
   };
