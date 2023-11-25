@@ -10,7 +10,6 @@ import { EthereumProvider } from '@walletconnect/ethereum-provider'
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
   getConfig,
-  ExternalProvider,
   showErrorMessage,
   showInfoMessage,
   showSuccessMessage,

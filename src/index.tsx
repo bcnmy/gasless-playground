@@ -13,7 +13,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.polygonMumbai, chain.goerli],
+  [chain.polygonMumbai, chain.goerli, chain.mainnet, chain.optimism],
   [publicProvider()]
 );
 

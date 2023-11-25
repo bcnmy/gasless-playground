@@ -9,7 +9,6 @@ import { Biconomy } from "@biconomy/mexa";
 import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
   getConfig,
-  ExternalProvider,
   showErrorMessage,
   showSuccessMessage,
 } from "../utils";

@@ -10,7 +10,6 @@ import useGetQuoteFromNetwork from "../hooks/useGetQuoteFromNetwork";
 import {
   getConfig,
   getSignatureParametersWeb3,
-  ExternalProvider,
   showErrorMessage,
   showSuccessMessage,
 } from "../utils";
