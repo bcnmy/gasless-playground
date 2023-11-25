@@ -90,13 +90,12 @@ function App() {
         config.contract.abi,
         biconomy.ethersProvider
       );
-      let { data } = await contractInstance.populateTransaction.claim(1);
+      let { data } = await contractInstance.populateTransaction.setQuote(arg);
       let txParams = {
         data: data,
         to: config.contract.address,
-        from: "0xE041608922d06a4F26C0d4c27d8bCD01daf1f792",
+        from: userAddress,
         signatureType: "EIP712_SIGN",
-        gasLimit: 5000000,
       };
       console.log("txParams", txParams);
       const tx = await provider.send("eth_sendTransaction", [txParams]);

@@ -8,6 +8,12 @@ import configCustom_PersonalSign_5 from "./configs/5/Custom_PersonalSign.json";
 import configEIP2771_80001 from "./configs/80001/EIP2771.json";
 import configCustom_EIP712Sign_80001 from "./configs/80001/Custom_EIP712Sign.json";
 import configCustom_PersonalSign_80001 from "./configs/80001/Custom_PersonalSign.json";
+import configEIP2771_1 from "./configs/1/EIP2771.json";
+import configCustom_EIP712Sign_1 from "./configs/1/Custom_EIP712Sign.json";
+import configCustom_PersonalSign_1 from "./configs/1/Custom_PersonalSign.json";
+import configEIP2771_10 from "./configs/10/EIP2771.json";
+import configCustom_EIP712Sign_10 from "./configs/10/Custom_EIP712Sign.json";
+import configCustom_PersonalSign_10 from "./configs/10/Custom_PersonalSign.json";
 
 export const getConfig = (chainId: string) => {
   if (chainId === "5") {
@@ -22,11 +28,17 @@ export const getConfig = (chainId: string) => {
       configCustom_EIP712Sign: configCustom_EIP712Sign_80001,
       configCustom_PersonalSign: configCustom_PersonalSign_80001,
     };
+  } else if (chainId === "1") {
+    return {
+      configEIP2771: configEIP2771_1,
+      configCustom_EIP712Sign: configCustom_EIP712Sign_1,
+      configCustom_PersonalSign: configCustom_PersonalSign_1,
+    };
   } else {
     return {
-      configEIP2771: configEIP2771_80001,
-      configCustom_EIP712Sign: configCustom_EIP712Sign_80001,
-      configCustom_PersonalSign: configCustom_PersonalSign_80001,
+      configEIP2771: configEIP2771_1,
+      configCustom_EIP712Sign: configCustom_EIP712Sign_1,
+      configCustom_PersonalSign: configCustom_PersonalSign_1,
     };
   }
 };
