@@ -14,7 +14,8 @@ import Ethers_Custom_EIP712Sign from "./Ethers_Custom_EIP712Sign";
 import Ethers_Custom_PersonalSign from "./Ethers_Custom_PersonalSign";
 import Ethers_EIP2771_EIP712Sign from "./Ethers_EIP2771_EIP712Sign";
 import Ethers_EIP2771_PersonalSign from "./Ethers_EIP2771_PersonalSign";
-// import Ethers_Forward_EIP712Sign from './Ethers_Forward_EIP712Sign';
+import Ethers_Forward_EIP712Sign from './Ethers_Forward_EIP712Sign';
+import Ethers_Forward_PersonalSign from './Ethers_Forward_PersonalSign';
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -91,18 +92,27 @@ function App() {
         aria-label="Vertical tabs"
         className={classes.tabs}
       >
-        <Tab label="Ethers + Custom + EIP712 Sign" {...a11yProps(0)} />
-        <Tab label="Ethers + Custom + Personal Sign" {...a11yProps(1)} />
-        <Tab label="Ethers + EIP2771 + EIP712 Sign" {...a11yProps(2)} />
+        <Tab label="Ethers + Forward + EIP712 Sign" {...a11yProps(0)} />
+        <Tab label="Ethers + Forward + Personal Sign" {...a11yProps(1)} />
+        {/* <Tab label="Ethers + EIP2771 + EIP712 Sign" {...a11yProps(2)} />
         <Tab label="Ethers + EIP2771 + Personal Sign" {...a11yProps(3)} />
         <Tab label="Web3 + Custom + EIP712 Sign" {...a11yProps(4)} />
         <Tab label="Web3 + Custom + Personal Sign" {...a11yProps(5)} />
         <Tab label="Web3 + EIP2771 + EIP712 Sign" {...a11yProps(6)} />
-        <Tab label="Web3 + EIP2771 + Personal Sign" {...a11yProps(7)} />
+        <Tab label="Web3 + EIP2771 + Personal Sign" {...a11yProps(7)} /> */}
         {/* <Tab label="Ethers + Forward + EIP712 Sign" {...a11yProps(8)} /> */}
       </Tabs>
 
       <TabPanel value={value} index={0}>
+        <Ethers_Forward_EIP712Sign />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Ethers_Forward_PersonalSign />
+      </TabPanel>
+
+
+
+      {/* <TabPanel value={value} index={0}>
         <Ethers_Custom_EIP712Sign />
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -125,7 +135,7 @@ function App() {
       </TabPanel>
       <TabPanel value={value} index={7}>
         <Web3_EIP2771_PersonalSign />
-      </TabPanel>
+      </TabPanel> */}
     </div>
   );
 }
